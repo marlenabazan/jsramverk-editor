@@ -10,10 +10,10 @@ import { TrixEditor } from "react-trix";
 
 function App() {
   const [text, setText] = useState("")
-  const [html, setHTML] = useState("")
+  // const [html, setHTML] = useState("")
 
   const handleChange = (html, text) => {
-    setHTML(html)
+    // setHTML(html)
     setText(text)
   }
 

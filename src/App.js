@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import "trix";
 import "trix/dist/trix.css";
@@ -24,7 +24,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <h1>
           Text Editor
         </h1>

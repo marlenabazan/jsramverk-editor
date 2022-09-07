@@ -1,26 +1,26 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
-.App-logo {
-  height: 40vmin;
+/* .App-logo {
+  height: 5vmin;
   pointer-events: none;
-}
+} */
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background: linear-gradient(90deg, rgba(211,239,243,1) 0%, rgba(157,214,231,1) 50%, rgba(211,239,243,1) 100%);
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(6px + 1vmin);
   color: white;
 }
 
@@ -35,4 +35,35 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  text-shadow: 2px 2px #585858;
+}
+
+.Save {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  color: #1b405ac2;
+  padding: 8px .8em;
+  margin: 8px;
+}
+
+.Save:hover {
+  background-color: #b3d3ea;
+}
+
+.Save:active {
+  background-color: #a0c7e4;
+}
+
+.Editor {
+  width: 50%;
+  margin: auto;
+}
+
+.SaveDiv {
+  text-align: center;
 }

@@ -1,45 +1,12 @@
-// import logo from './logo.svg';
-import './App.css';
-
-import { useState } from 'react';
-
-import "trix";
-import "trix/dist/trix.css";
-import { TrixEditor } from "react-trix";
-
+import Editor from "./components/editor";
 
 function App() {
-  const [text, setText] = useState("")
-  // const [html, setHTML] = useState("")
-
-  const handleChange = (html, text) => {
-    // setHTML(html)
-    setText(text)
-  }
-
-  const save = () => {
-    console.log(text)
-  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-          Text Editor
-        </h1>
-      </header>
-
-      <div className="SaveDiv">
-        <button className="Save" onClick={save}>Save</button>
-      </div>
-
-      <div className="Editor">
-        <TrixEditor onChange={handleChange} placeholder="Write here..."/>
-      </div>
-
+    <div>
+        <Editor/>
     </div>
   );
 }
-
 
 export default App;

@@ -50,5 +50,11 @@ h1 {
 }
 
 .SaveDiv {
+  width: 50%;
+  margin: auto;
   text-align: center;
+}
+
+.Back {
+  float: right;
 }

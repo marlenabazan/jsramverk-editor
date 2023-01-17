@@ -22,5 +22,5 @@ test('renders create new document button', () => {
 test('renders update document button', () => {
   const { container } = render(<App />);
 
-  expect(screen.getByText(/Update a document/i)).toBeInTheDocument();
+  expect(screen.getByText("Choose/Update a document")).toBeInTheDocument();
 });

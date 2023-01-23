@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TrixEditor } from "react-trix";
+import { io } from "socket.io-client";
 
 import '../style/App.css';
 
@@ -12,28 +13,69 @@ function Documents() {
     const [documents, setDocuments] = useState([]);
     const [currentDoc, setCurrentDoc] = useState({});
     const [text, setText] = useState("");
+    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        (async () => {
+        setSocket(io("http://localhost:1337"));
+
+      return () => {
+          if (socket) {
+            socket.disconnect();
+          }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
             const allDocuments = await docsModel.getAllDocuments();
             setDocuments(allDocuments);
-        })();
-    }, [currentDoc]);
+        }
+        fetchData();
+    }, []);
 
-    async function handleChangeSelect(event) {
-        const oneDocument = await docsModel.getOne();
-        setCurrentDoc(oneDocument);
+    useEffect(() => {
+        let data = {
+            _id: currentDoc._id,
+            text: text
+        };
+
+        if (socket) {
+            socket.on("doc", (data) => {
+                setContent(data.html, false);
+                setContent(data.text);
+                // save
+            });
+        }
+
+        if (socket) {
+            socket.emit("doc", data);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [text]);
+    
+      function setContent(content) {
         let element = document.querySelector("trix-editor");
         element.value = "";
-        element.editor.insertHTML(oneDocument.text);
+        element.editor.insertHTML(content);
+      }
 
+    async function handleChangeSelect(event) {
+        const oneDocument = await docsModel.getOne(event.target.value);
+        setCurrentDoc(oneDocument);
+        // let element = document.querySelector("trix-editor");
+        // element.value = "";
+        // element.editor.insertHTML(oneDocument.text);
+        setContent(oneDocument.text);
+        socket.emit("create", oneDocument["_id"]);
+        console.log(socket.emit("create", oneDocument["_id"]));
         return (
             oneDocument
         )
     }
 
     const handleChangeText = (html, text) => {
-        setText(text)
+        setText(text);
     }
 
     async function updateDoc(docToUpdate) {

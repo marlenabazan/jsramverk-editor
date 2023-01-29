@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TrixEditor } from "react-trix";
 import { io } from "socket.io-client";
 
@@ -16,7 +16,8 @@ function Documents() {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        setSocket(io("http://localhost:1337"));
+        // setSocket(io("http://localhost:1337"));
+        setSocket(io("https://jsramverk-editor-mabn21.azurewebsites.net"));
 
       return () => {
           if (socket) {
@@ -44,7 +45,6 @@ function Documents() {
             socket.on("doc", (data) => {
                 setContent(data.html, false);
                 setContent(data.text);
-                // save
             });
         }
 
@@ -57,6 +57,7 @@ function Documents() {
       function setContent(content) {
         let element = document.querySelector("trix-editor");
         element.value = "";
+        element.editor.setSelectedRange([0, 0]);
         element.editor.insertHTML(content);
       }
 
@@ -78,10 +79,10 @@ function Documents() {
         setText(text);
     }
 
-    async function updateDoc(docToUpdate) {
-        setText(text);
-        currentDoc.text = text;
-        await docsModel.updateDoc(currentDoc);
+    async function updateDoc() {
+        const editor = document.querySelector('trix-editor');
+        let content = editor.innerHTML;
+        await docsModel.saveDoc(content, currentDoc);
     }
 
     function refreshPage() {
@@ -105,7 +106,7 @@ function Documents() {
             </div>
 
             <div className="Editor">
-                <TrixEditor onChange={handleChangeText} placeholder="Write here..."/>
+                <TrixEditor class="trix-content" onChange={handleChangeText} placeholder="Write here..."/>
             </div>
         </div>
     )

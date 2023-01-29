@@ -37,6 +37,23 @@ const documents = {
         const result = await response.json();
         console.log("Updated document: ", result.data);
     },
+    saveDoc: async function saveDoc(content, docToSave) {
+        console.log("html", content);
+        console.log("doc to save", docToSave);
+        const response = await fetch(`${documents.baseUrl}/docs`, {
+            body: JSON.stringify({
+                _id: docToSave._id,
+                title: docToSave.title,
+                text: content
+              }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT"
+        });
+        const result = await response.json();
+        console.log("Updated document: ", result.data);
+    }
 };
 
 export default documents;

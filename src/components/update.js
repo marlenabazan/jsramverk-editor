@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { TrixEditor } from "react-trix";
 import { io } from "socket.io-client";
 

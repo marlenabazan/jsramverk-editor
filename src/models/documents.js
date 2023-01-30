@@ -37,19 +37,18 @@ const documents = {
         const result = await response.json();
         console.log("Updated document: ", result.data);
     },
-    saveDoc: async function saveDoc(content, docToSave) {
-        console.log("html", content);
-        console.log("doc to save", docToSave);
+    saveDoc: async function saveDoc(content, docToSaveId) {
+        console.log("content: ", content);
+        console.log("doc to save: ", docToSaveId);
         const response = await fetch(`${documents.baseUrl}/docs`, {
             body: JSON.stringify({
-                _id: docToSave._id,
-                title: docToSave.title,
+                _id: docToSaveId,
                 text: content
               }),
             headers: {
-                "Content-Type": "application/json"
+                'content-type': 'application/json'
             },
-            method: "PUT"
+            method: 'PUT'
         });
         const result = await response.json();
         console.log("Updated document: ", result.data);

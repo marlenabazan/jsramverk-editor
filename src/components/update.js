@@ -82,7 +82,7 @@ function Documents() {
     async function updateDoc() {
         const editor = document.querySelector('trix-editor');
         let content = editor.innerHTML;
-        await docsModel.saveDoc(content, currentDoc);
+        await docsModel.saveDoc(content, currentDoc._id);
     }
 
     function refreshPage() {

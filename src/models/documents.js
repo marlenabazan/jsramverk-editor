@@ -42,21 +42,35 @@ const documents = {
         const result = await response.json();
         console.log("Updated document: ", result.data);
     },
-    saveDoc: async function saveDoc(content, docToSaveId) {
-        console.log("content: ", content);
-        console.log("doc to save: ", docToSaveId);
-        const response = await fetch(`${documents.baseUrl}/docs`, {
+    // saveDoc: async function saveDoc(content, docToSaveId) {
+    //     console.log("content: ", content);
+    //     console.log("doc to save: ", docToSaveId);
+    //     const response = await fetch(`${documents.baseUrl}/docs`, {
+    //         body: JSON.stringify({
+    //             _id: docToSaveId,
+    //             text: content
+    //           }),
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         },
+    //         method: 'PUT'
+    //     });
+    //     const result = await response.json();
+    //     console.log("Updated document: ", result.data);
+    // }
+    shareDoc: async function shareDoc(docToShare, userToShare) {
+        const response = await fetch(`${documents.baseUrl}/docs/share`, {
             body: JSON.stringify({
-                _id: docToSaveId,
-                text: content
-              }),
+                _id: docToShare,
+                user: userToShare
+            }),
             headers: {
                 'content-type': 'application/json'
             },
             method: 'PUT'
-        });
+    });
         const result = await response.json();
-        console.log("Updated document: ", result.data);
+        console.log("Shared document: ", result.data);
     }
 };
 

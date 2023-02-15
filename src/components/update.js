@@ -16,6 +16,8 @@ function Documents({userEmail, token}) {
     const [text, setText] = useState("");
     const [socket, setSocket] = useState(null);
     const [newDoc, setNewDoc] = useState(false);
+    const [share, setShare] = useState(false);
+
     console.log("update user", userEmail);
     console.log("update token: ", token);
 
@@ -35,7 +37,8 @@ function Documents({userEmail, token}) {
         async function fetchData() {
             const allDocuments = await docsModel.getAllDocuments(token);
             // setDocuments(allDocuments);
-            setDocuments(allDocuments.filter(doc => doc.userId === userEmail));
+            setDocuments(allDocuments.filter(doc => doc.userId === userEmail || (doc.shared && doc.shared.includes(userEmail))));
+
         }
         fetchData();
     }, []);
@@ -107,6 +110,17 @@ function Documents({userEmail, token}) {
         )
     }
 
+    const handleShare = () => {
+        setShare(true)
+    }
+
+    async function shareWithUser() {
+        const userToShare = document.getElementById("userToShare").value;
+        console.log("user to share", userToShare);
+        console.log("doc to share", currentDoc._id);
+        await docsModel.shareDoc(currentDoc._id, userToShare);
+    }
+
     return (
         <div className="App">
             <Header/>
@@ -121,6 +135,16 @@ function Documents({userEmail, token}) {
 
                 <button className="Save" onClick={updateDoc}>Save</button>
                 <button className="Save" onClick={handleCreateDoc}>Create new document instead</button>
+
+                {share ? (
+                    <div>
+                        <input id="userToShare" placeholder="Users e-mail"/>
+                        <button className="Save" onClick={shareWithUser}>Share</button>
+                    </div>
+                ) : (
+                    <button className="Save" onClick={handleShare}>Share document</button>
+                )}
+
                 {/* <button className="Save Back" onClick={refreshPage}>Go back</button> */}
             </div>
 

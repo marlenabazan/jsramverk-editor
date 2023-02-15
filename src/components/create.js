@@ -26,6 +26,7 @@ function Create({userEmail, token}) {
         newDocument.title = title.value;
         newDocument.text = content;
         newDocument.userId = userEmail;
+        newDocument.shared = [];
 
         await docsModel.createDoc(newDocument);
    }

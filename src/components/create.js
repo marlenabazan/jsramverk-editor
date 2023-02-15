@@ -8,10 +8,10 @@ import Header from "./header";
 import Update from "./update";
 
 
-function Create(user) {
+function Create({userEmail}) {
     const [text, setText] = useState("");
     const [showDoc, setShowDoc] = useState(false);
-    console.log("userEmail create", user, user.userEmail);
+    console.log("userEmail create", userEmail);
 
     const handleChange = (html, text) => {
         setText(text);
@@ -22,7 +22,7 @@ function Create(user) {
         let newDocument = {};
         newDocument.title = title.value;
         newDocument.text = text;
-        newDocument.userId = user.userEmail;
+        newDocument.userId = userEmail;
 
         await docsModel.createDoc(newDocument);
    }
@@ -36,9 +36,9 @@ function Create(user) {
     }
 
     if (showDoc) {
-        console.log("if show doc user", user);
+        console.log("if show doc user", userEmail);
         return (
-        <Update user={user.userEmail}/>
+        <Update userEmail={userEmail}/>
         )
     }
 

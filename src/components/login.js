@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import authModel from '../models/auth';
 
-export default function Login({setToken}) {
+export default function Login({ setToken, onLogin, setUserEmail }) {
     const [user, setUser] = useState({});
+    // const [userEmail, setUserEmail] = useState(null);
+    // console.log(onLogin);
 
     function handleChange(event) {
         let newObject = {};
@@ -14,7 +16,18 @@ export default function Login({setToken}) {
     };
 
     async function register() {
-        await authModel.register(user); 
+        const registerResult = await authModel.register(user);
+
+        if (registerResult.data.user) {
+            setUser(registerResult.data.user._id);
+        }
+
+        const loginResult = await authModel.login(user); 
+
+        if (loginResult.data.token) {
+            setToken(loginResult.data.token);
+            setUserEmail(user.email);
+        }
     };
 
     async function login() {
@@ -22,17 +35,24 @@ export default function Login({setToken}) {
 
         if (loginResult.data.token) {
             setToken(loginResult.data.token);
+            console.log(user.email);
+            onLogin(loginResult.data.token, user.email);
+
+            // setUserEmail(user.email);
+            // console.log(user.email);
         }
     };
 
     return (
-        <div>
-            <h2>Login eller registrera</h2>
-            <input type="email" name="email" onChange={handleChange}></input>
-            <input type="password" name="password" onChange={handleChange}></input>
-            
-            <button onClick={register}>Registrera</button>
-            <button onClick={login}>Logga in</button>
+        <div className="Form-container">
+            <div className="Form">
+                <h2>Logga in eller registrera</h2>
+                <input className="Input" type="email" name="email" placeholder="Email" onChange={handleChange}></input>
+  
+                <input className="Input" type="password" name="password" placeholder="Lösenord" onChange={handleChange}></input>
+                <button className="FormButton" onClick={login}>Logga in</button>
+                <button className="FormButton" onClick={register}>Registrera</button>
+            </div>
         </div>   
     )
 }

@@ -5,10 +5,13 @@ import '../style/App.css';
 import docsModel from '../models/documents';
 
 import Header from "./header";
+import Update from "./update";
 
 
-function Create() {
+function Create(user) {
     const [text, setText] = useState("");
+    const [showDoc, setShowDoc] = useState(false);
+    console.log("userEmail create", user, user.userEmail);
 
     const handleChange = (html, text) => {
         setText(text);
@@ -19,13 +22,25 @@ function Create() {
         let newDocument = {};
         newDocument.title = title.value;
         newDocument.text = text;
+        newDocument.userId = user.userEmail;
 
         await docsModel.createDoc(newDocument);
    }
 
-   function refreshPage() {
-    window.location.reload();
-  }
+//    function refreshPage() {
+//     window.location.reload();
+//   }
+
+    const handleShowDoc = () => {
+        setShowDoc(true)
+    }
+
+    if (showDoc) {
+        console.log("if show doc user", user);
+        return (
+        <Update user={user.userEmail}/>
+        )
+    }
 
     return (
         <div className="App">
@@ -34,7 +49,8 @@ function Create() {
         <div className="SaveDiv">
             <input onChange={handleChange} id="title" placeholder="Title"/>
             <button className="Save" onClick={createDocument}>Create</button>
-            <button className="Save Back" onClick={refreshPage}>Go back</button>
+            <button className="Save" onClick={handleShowDoc}>Choose a document instead</button>
+            {/* <button className="Save Back" onClick={refreshPage}>Go back</button> */}
         </div>
 
         <div className="Editor">

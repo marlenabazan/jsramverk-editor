@@ -7,13 +7,16 @@ import '../style/App.css';
 import docsModel from '../models/documents';
 
 import Header from "./header";
+import Create from "./create";
 
 
-function Documents() {
+function Documents({user}) {
     const [documents, setDocuments] = useState([]);
     const [currentDoc, setCurrentDoc] = useState({});
     const [text, setText] = useState("");
     const [socket, setSocket] = useState(null);
+    const [newDoc, setNewDoc] = useState(false);
+    console.log("update user", user);
 
     useEffect(() => {
         // setSocket(io("http://localhost:1337"));
@@ -30,7 +33,8 @@ function Documents() {
     useEffect(() => {
         async function fetchData() {
             const allDocuments = await docsModel.getAllDocuments();
-            setDocuments(allDocuments);
+            // setDocuments(allDocuments);
+            setDocuments(allDocuments.filter(doc => doc.userId === user));
         }
         fetchData();
     }, []);
@@ -82,12 +86,25 @@ function Documents() {
     async function updateDoc() {
         const editor = document.querySelector('trix-editor');
         let content = editor.innerHTML;
-        await docsModel.saveDoc(content, currentDoc._id);
+        // await docsModel.saveDoc(content, currentDoc._id);
+        const docToUpdate = { _id: currentDoc._id, text: content };
+        console.log("docToUpdate", docToUpdate);
+        await docsModel.updateDoc(docToUpdate);
     }
 
-    function refreshPage() {
-        window.location.reload();
-      }
+    // function refreshPage() {
+    //     window.location.reload();
+    //   }
+
+    const handleCreateDoc = () => {
+        setNewDoc(true)
+    }
+
+    if (newDoc) {
+        return (
+            <Create userEmail={user}/>
+        )
+    }
 
     return (
         <div className="App">
@@ -102,7 +119,8 @@ function Documents() {
                 </select>
 
                 <button className="Save" onClick={updateDoc}>Save</button>
-                <button className="Save Back" onClick={refreshPage}>Go back</button>
+                <button className="Save" onClick={handleCreateDoc}>Create new document instead</button>
+                {/* <button className="Save Back" onClick={refreshPage}>Go back</button> */}
             </div>
 
             <div className="Editor">

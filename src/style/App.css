@@ -58,3 +58,48 @@ h1 {
 .Back {
   float: right;
 }
+
+.Form-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+  padding: 2em;
+}
+
+.Form {
+  border-radius: 25px;
+  background: linear-gradient(90deg, rgba(211,239,243,1) 0%, rgba(157,214,231,1) 50%, rgba(211,239,243,1) 100%);
+  margin: auto;
+  margin-top: 20%;
+  padding: 5em;
+  padding-left: 15em;
+  padding-right: 15em;
+}
+
+.Input {
+  display: flex;
+  margin: auto;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.FormButton {
+  display: flex;
+  margin: auto;
+  margin-bottom: 0.5em;
+  padding: 0.2em;
+  justify-content: center;
+  align-items: center;
+}
+
+.Logout {
+  float: right;
+  color: #112a3b;
+  border: 1px solid #BE1E19;
+  background-color: white;
+}

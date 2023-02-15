@@ -4,8 +4,6 @@ import authModel from '../models/auth';
 
 export default function Login({ setToken, onLogin, setUserEmail }) {
     const [user, setUser] = useState({});
-    // const [userEmail, setUserEmail] = useState(null);
-    // console.log(onLogin);
 
     function handleChange(event) {
         let newObject = {};
@@ -35,11 +33,8 @@ export default function Login({ setToken, onLogin, setUserEmail }) {
 
         if (loginResult.data.token) {
             setToken(loginResult.data.token);
-            console.log(user.email);
+            console.log("User: ", user.email);
             onLogin(loginResult.data.token, user.email);
-
-            // setUserEmail(user.email);
-            // console.log(user.email);
         }
     };
 

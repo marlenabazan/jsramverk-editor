@@ -6,7 +6,6 @@ import '../style/App.css';
 
 import docsModel from '../models/documents';
 
-import Header from "./header";
 import Create from "./create";
 
 
@@ -17,9 +16,6 @@ function Documents({userEmail, token}) {
     const [socket, setSocket] = useState(null);
     const [newDoc, setNewDoc] = useState(false);
     const [share, setShare] = useState(false);
-
-    console.log("update user", userEmail);
-    console.log("update token: ", token);
 
     useEffect(() => {
         // setSocket(io("http://localhost:1337"));
@@ -72,12 +68,9 @@ function Documents({userEmail, token}) {
     async function handleChangeSelect(event) {
         const oneDocument = await docsModel.getOne(event.target.value);
         setCurrentDoc(oneDocument);
-        // let element = document.querySelector("trix-editor");
-        // element.value = "";
-        // element.editor.insertHTML(oneDocument.text);
         setContent(oneDocument.text);
         socket.emit("create", oneDocument["_id"]);
-        console.log(socket.emit("create", oneDocument["_id"]));
+        // console.log(socket.emit("create", oneDocument["_id"]));
         return (
             oneDocument
         )
@@ -90,15 +83,9 @@ function Documents({userEmail, token}) {
     async function updateDoc() {
         const editor = document.querySelector('trix-editor');
         let content = editor.innerHTML;
-        // await docsModel.saveDoc(content, currentDoc._id);
         const docToUpdate = { _id: currentDoc._id, text: content };
-        console.log("docToUpdate", docToUpdate);
         await docsModel.updateDoc(docToUpdate);
     }
-
-    // function refreshPage() {
-    //     window.location.reload();
-    //   }
 
     const handleCreateDoc = () => {
         setNewDoc(true)
@@ -116,14 +103,11 @@ function Documents({userEmail, token}) {
 
     async function shareWithUser() {
         const userToShare = document.getElementById("userToShare").value;
-        console.log("user to share", userToShare);
-        console.log("doc to share", currentDoc._id);
         await docsModel.shareDoc(currentDoc._id, userToShare);
     }
 
     return (
         <div className="App">
-            <Header/>
 
             <div className="SaveDiv">
                 <select id="docSelect"
@@ -144,8 +128,6 @@ function Documents({userEmail, token}) {
                 ) : (
                     <button className="Save" onClick={handleShare}>Share document</button>
                 )}
-
-                {/* <button className="Save Back" onClick={refreshPage}>Go back</button> */}
             </div>
 
             <div className="Editor">

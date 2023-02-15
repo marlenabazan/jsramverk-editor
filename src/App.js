@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Editor from "./components/editor";
 import Login from "./components/login";
+import Header from "./components/header";
 
 function App() {
   const [token, setToken] = useState("");
@@ -14,18 +15,17 @@ function App() {
   }
 
   function handleLogin(token, userEmail) {
-    console.log("handleLogin");
     setToken(token);
     setUserEmail(userEmail);
   }
 
   return (
     <div>
-        {/* <Editor/> */}
-
-        {/* {token ? <Editor/> : <Login setToken={setToken}/>} */}
         {token ? (
-        <Editor token={token} userEmail={userEmail} onLogout={handleLogout} />
+          <div>
+            <Header userEmail={userEmail} setToken={setToken}/>
+            <Editor token={token} userEmail={userEmail} />
+          </div>
       ) : (
         <Login onLogin={handleLogin} setToken={setToken} setUserEmail={setUserEmail}/>
       )}

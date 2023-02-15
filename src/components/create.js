@@ -8,20 +8,23 @@ import Header from "./header";
 import Update from "./update";
 
 
-function Create({userEmail}) {
+function Create({userEmail, token}) {
     const [text, setText] = useState("");
     const [showDoc, setShowDoc] = useState(false);
     console.log("userEmail create", userEmail);
+    console.log("create token: ", token);
 
     const handleChange = (html, text) => {
         setText(text);
     }
 
     async function createDocument() {
+        const editor = document.querySelector('trix-editor');
+        let content = editor.innerHTML;
         const title = document.getElementById("title");
         let newDocument = {};
         newDocument.title = title.value;
-        newDocument.text = text;
+        newDocument.text = content;
         newDocument.userId = userEmail;
 
         await docsModel.createDoc(newDocument);
@@ -38,7 +41,7 @@ function Create({userEmail}) {
     if (showDoc) {
         console.log("if show doc user", userEmail);
         return (
-        <Update userEmail={userEmail}/>
+        <Update userEmail={userEmail} token={token}/>
         )
     }
 

@@ -10,13 +10,14 @@ import Header from "./header";
 import Create from "./create";
 
 
-function Documents({userEmail}) {
+function Documents({userEmail, token}) {
     const [documents, setDocuments] = useState([]);
     const [currentDoc, setCurrentDoc] = useState({});
     const [text, setText] = useState("");
     const [socket, setSocket] = useState(null);
     const [newDoc, setNewDoc] = useState(false);
     console.log("update user", userEmail);
+    console.log("update token: ", token);
 
     useEffect(() => {
         // setSocket(io("http://localhost:1337"));
@@ -32,7 +33,7 @@ function Documents({userEmail}) {
 
     useEffect(() => {
         async function fetchData() {
-            const allDocuments = await docsModel.getAllDocuments();
+            const allDocuments = await docsModel.getAllDocuments(token);
             // setDocuments(allDocuments);
             setDocuments(allDocuments.filter(doc => doc.userId === userEmail));
         }
@@ -102,7 +103,7 @@ function Documents({userEmail}) {
 
     if (newDoc) {
         return (
-            <Create userEmail={userEmail}/>
+            <Create userEmail={userEmail} token={token}/>
         )
     }
 

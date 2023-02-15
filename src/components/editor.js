@@ -30,13 +30,13 @@ function Editor({token, userEmail, onLogout}) {
   if (showDoc) {
     console.log("editor if show doc userEmail", userEmail);
     return (
-      <Update userEmail={userEmail}/>
+      <Update userEmail={userEmail} token={token}/>
     )
   }
   if (newDoc) {
     console.log("editor if new doc userEmail", userEmail);
     return (
-      <Create userEmail={userEmail}/>
+      <Create userEmail={userEmail} token={token}/>
     )
   }
 

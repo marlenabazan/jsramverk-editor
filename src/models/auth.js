@@ -1,4 +1,5 @@
-const baseUrl = "http://localhost:1337";
+// const baseUrl = "http://localhost:1337";
+const baseUrl = "https://jsramverk-editor-mabn21.azurewebsites.net";
 
 const auth = {
     token: "",

@@ -31,10 +31,9 @@ function Documents({userEmail, token}) {
 
     useEffect(() => {
         async function fetchData() {
-            const allDocuments = await docsModel.getAllDocuments(token);
-            // setDocuments(allDocuments);
+            let allDocuments = await docsModel.getAllDocuments(token);
+            allDocuments = allDocuments.documents;
             setDocuments(allDocuments.filter(doc => doc.userId === userEmail || (doc.shared && doc.shared.includes(userEmail))));
-
         }
         fetchData();
     }, []);

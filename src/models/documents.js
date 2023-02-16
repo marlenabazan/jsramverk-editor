@@ -2,23 +2,49 @@ const documents = {
     baseUrl: "https://jsramverk-editor-mabn21.azurewebsites.net",
 
     getAllDocuments: async function getAllDocuments(token) {
-        const response = await fetch(`${documents.baseUrl}/docs`, {
+        const response = await fetch(`${documents.baseUrl}/graphql`, {
+            method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'x-access-token': token
             },
-            method: 'GET'
+            body: JSON.stringify({ query: `{ documents { _id title text userId shared } }` })
     });
         const result = await response.json();
 
         return result.data;
     },
+    // getAllDocuments: async function getAllDocuments(token) {
+    //     const response = await fetch(`${documents.baseUrl}/docs`, {
+    //         headers: {
+    //             'x-access-token': token
+    //         },
+    //         method: 'GET'
+    // });
+    //     const result = await response.json();
+
+    //     return result.data;
+    // },
     getOne: async function getOne(id) {
-        const docSelect = document.getElementById("docSelect");
-        const response = await fetch(`${documents.baseUrl}/docs/${docSelect.value}`);
+        const response = await fetch(`${documents.baseUrl}/graphql`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: `{ document(id: "${id}") { _id title text userId shared } }` })
+    });
         const result = await response.json();
 
-        return result.data;
+        return result.data.document;
     },
+    // getOne: async function getOne(id) {
+    //     const response = await fetch(`${documents.baseUrl}/docs/${id}`);
+    //     const result = await response.json();
+
+    //     return result.data;
+    // },
     createDoc: async function createDoc(newDocument) {
         const response = await fetch(`${documents.baseUrl}/docs`, {
             body: JSON.stringify(newDocument),
@@ -42,22 +68,6 @@ const documents = {
         const result = await response.json();
         console.log("Updated document: ", result.data);
     },
-    // saveDoc: async function saveDoc(content, docToSaveId) {
-    //     console.log("content: ", content);
-    //     console.log("doc to save: ", docToSaveId);
-    //     const response = await fetch(`${documents.baseUrl}/docs`, {
-    //         body: JSON.stringify({
-    //             _id: docToSaveId,
-    //             text: content
-    //           }),
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         },
-    //         method: 'PUT'
-    //     });
-    //     const result = await response.json();
-    //     console.log("Updated document: ", result.data);
-    // }
     shareDoc: async function shareDoc(docToShare, userToShare) {
         const response = await fetch(`${documents.baseUrl}/docs/share`, {
             body: JSON.stringify({

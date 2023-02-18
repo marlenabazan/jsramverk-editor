@@ -9,11 +9,6 @@ function App() {
   console.log("Token: ", token);
   const [userEmail, setUserEmail] = useState(null);
 
-  function handleLogout() {
-    setToken(null);
-    setUserEmail(null);
-  }
-
   function handleLogin(token, userEmail) {
     setToken(token);
     setUserEmail(userEmail);

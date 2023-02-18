@@ -103,3 +103,13 @@ h1 {
   border: 1px solid #BE1E19;
   background-color: white;
 }
+
+.pdf-title {
+  margin: 50px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.pdf-text {
+  margin: 50px;
+}

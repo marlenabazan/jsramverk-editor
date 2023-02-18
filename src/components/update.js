@@ -7,6 +7,7 @@ import '../style/App.css';
 import docsModel from '../models/documents';
 
 import Create from "./create";
+import Pdf from "./pdf";
 
 
 function Documents({userEmail, token}) {
@@ -16,6 +17,7 @@ function Documents({userEmail, token}) {
     const [socket, setSocket] = useState(null);
     const [newDoc, setNewDoc] = useState(false);
     const [share, setShare] = useState(false);
+    const [pdf, setPdf] = useState(false);
 
     useEffect(() => {
         // setSocket(io("http://localhost:1337"));
@@ -70,6 +72,7 @@ function Documents({userEmail, token}) {
         setContent(oneDocument.text);
         socket.emit("create", oneDocument["_id"]);
         // console.log(socket.emit("create", oneDocument["_id"]));
+        setPdf(true);
         return (
             oneDocument
         )
@@ -127,6 +130,13 @@ function Documents({userEmail, token}) {
                 ) : (
                     <button className="Save" onClick={handleShare}>Share document</button>
                 )}
+
+                {pdf ?
+                    <Pdf currentDoc={currentDoc}/>
+                : 
+                null
+                }
+
             </div>
 
             <div className="Editor">

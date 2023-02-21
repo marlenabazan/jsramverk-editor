@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import '../style/App.css';
 
 import docsModel from '../models/documents';
+import shareModel from '../models/invite';
 
 import Create from "./create";
 import Pdf from "./pdf";
@@ -17,6 +18,7 @@ function Documents({userEmail, token}) {
     const [socket, setSocket] = useState(null);
     const [newDoc, setNewDoc] = useState(false);
     const [share, setShare] = useState(false);
+    const [showShare, setShowShare] = useState(false);
     const [pdf, setPdf] = useState(false);
 
     useEffect(() => {
@@ -73,6 +75,13 @@ function Documents({userEmail, token}) {
         socket.emit("create", oneDocument["_id"]);
         // console.log(socket.emit("create", oneDocument["_id"]));
         setPdf(true);
+
+        if (share) {
+            setShowShare(false);
+        } else {
+            setShowShare(true);
+        }
+        
         return (
             oneDocument
         )
@@ -100,12 +109,14 @@ function Documents({userEmail, token}) {
     }
 
     const handleShare = () => {
-        setShare(true)
+        setShowShare(false);
+        setShare(true);
     }
 
     async function shareWithUser() {
         const userToShare = document.getElementById("userToShare").value;
         await docsModel.shareDoc(currentDoc._id, userToShare);
+        await shareModel.sendEmail(token, userToShare, currentDoc.title);
     }
 
     return (
@@ -122,13 +133,19 @@ function Documents({userEmail, token}) {
                 <button className="Save" onClick={updateDoc}>Save</button>
                 <button className="Save" onClick={handleCreateDoc}>Create new document instead</button>
 
+                {showShare ? (
+                    <button className="Save" onClick={handleShare}>Share document</button>
+                ) : (
+                    null
+                )}
+
                 {share ? (
                     <div>
                         <input id="userToShare" placeholder="Users e-mail"/>
-                        <button className="Save" onClick={shareWithUser}>Share</button>
+                        <button className="Save" onClick={shareWithUser}>Share and send invite</button>
                     </div>
                 ) : (
-                    <button className="Save" onClick={handleShare}>Share document</button>
+                    null
                 )}
 
                 {pdf ?

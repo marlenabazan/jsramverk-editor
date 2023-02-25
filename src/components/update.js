@@ -22,8 +22,8 @@ function Documents({userEmail, token}) {
     const [pdf, setPdf] = useState(false);
 
     useEffect(() => {
-        // setSocket(io("http://localhost:1337"));
-        setSocket(io("https://jsramverk-editor-mabn21.azurewebsites.net"));
+        setSocket(io("http://localhost:1337"));
+        // setSocket(io("https://jsramverk-editor-mabn21.azurewebsites.net"));
 
       return () => {
           if (socket) {

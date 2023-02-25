@@ -1,5 +1,6 @@
 const documents = {
-    baseUrl: "https://jsramverk-editor-mabn21.azurewebsites.net",
+    // baseUrl: "https://jsramverk-editor-mabn21.azurewebsites.net",
+    baseUrl: "http://localhost:1337",
 
     getAllDocuments: async function getAllDocuments(token) {
         const response = await fetch(`${documents.baseUrl}/graphql`, {

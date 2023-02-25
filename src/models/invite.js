@@ -1,4 +1,5 @@
-const baseUrl = "https://jsramverk-editor-mabn21.azurewebsites.net";
+// const baseUrl = "https://jsramverk-editor-mabn21.azurewebsites.net";
+const baseUrl = "http://localhost:1337";
 
 const invite = {
     sendEmail: async function sendEmail(token, userToShare, docTitle) {

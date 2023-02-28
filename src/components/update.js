@@ -40,6 +40,7 @@ function Documents({userEmail, token}) {
             setDocuments(allDocuments.filter(doc => doc.userId === userEmail || (doc.shared && doc.shared.includes(userEmail))));
         }
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

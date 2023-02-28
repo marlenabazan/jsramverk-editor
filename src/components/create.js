@@ -8,12 +8,12 @@ import Update from "./update";
 
 
 function Create({userEmail, token}) {
-    const [text, setText] = useState("");
+    // const [text, setText] = useState("");
     const [showDoc, setShowDoc] = useState(false);
 
-    const handleChange = (html, text) => {
-        setText(text);
-    }
+    // const handleChange = (html, text) => {
+    //     setText(text);
+    // }
 
     async function createDocument() {
         const editor = document.querySelector('trix-editor');
@@ -42,13 +42,13 @@ function Create({userEmail, token}) {
         <div className="App">
 
         <div className="SaveDiv">
-            <input onChange={handleChange} id="title" placeholder="Title"/>
+            <input id="title" placeholder="Title"/>
             <button className="Save" onClick={createDocument}>Create</button>
             <button className="Save" onClick={handleShowDoc}>Choose a document instead</button>
         </div>
 
         <div className="Editor">
-            <TrixEditor onChange={handleChange} placeholder="Write here..."/>
+            <TrixEditor placeholder="Write here..."/>
         </div>
 
         </div>
